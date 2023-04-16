@@ -19,5 +19,7 @@
   },
   "rules": {
     // Add custom rules here
+    "react/react-in-jsx-scope": "off",
+    "prettier/prettier": "error"
   }
 }
