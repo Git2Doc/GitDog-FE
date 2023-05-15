@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
-import logo from '../asset/img/gitdog.png';
 import { useNavigate } from 'react-router-dom';
+import Header from '../components/Header';
 function Main() {
   const [repoUrl, setRepoUrl] = useState('');
   const [isHovering, setIsHovering] = useState(false);
@@ -38,97 +38,7 @@ function Main() {
         flexDirection: 'column',
       }}
     >
-      <header
-        style={{
-          width: '100%',
-          height: '80px',
-          backgroundColor: '#000',
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'space-between',
-          position: 'fixed',
-          top: 0,
-          left: 0,
-          zIndex: 1,
-        }}
-      >
-        <div
-          style={{
-            display: 'flex',
-            alignItems: 'center',
-            paddingLeft: '20px',
-          }}
-        >
-          <img
-            src={logo}
-            width="100"
-            height="80"
-            alt="Logo"
-            style={{ marginRight: 'px' }}
-          />
-          <h2 style={{ color: '#fff', margin: 0 }}>GitDog</h2>
-        </div>
-        <nav
-          style={{
-            display: 'flex',
-            alignItems: 'center',
-            paddingRight: '20px',
-          }}
-        >
-          <a
-            href="#"
-            style={{
-              color: '#fff',
-              padding: '10px',
-              textDecoration: 'none',
-              marginRight: '10px',
-              fontSize: '1rem',
-              fontWeight: 'bold',
-              textTransform: 'uppercase',
-              letterSpacing: '2px',
-              transition: 'color 0.2s ease-in-out',
-            }}
-            onMouseEnter={handleMouseEnter}
-            onMouseLeave={handleMouseLeave}
-          >
-            Home
-          </a>
-          <a
-            href="#"
-            style={{
-              color: '#fff',
-              padding: '10px',
-              textDecoration: 'none',
-              marginRight: '10px',
-              fontSize: '1rem',
-              fontWeight: 'bold',
-              textTransform: 'uppercase',
-              letterSpacing: '2px',
-              transition: 'color 0.2s ease-in-out',
-            }}
-          >
-            About
-          </a>
-          <a
-            href="#"
-            style={{
-              color: '#fff',
-              padding: '10px',
-              textDecoration: 'none',
-              marginRight: '10px',
-              fontSize: '1rem',
-              fontWeight: 'bold',
-              textTransform: 'uppercase',
-              letterSpacing: '2px',
-              transition: 'color 0.2s ease-in-out',
-            }}
-            onMouseEnter={handleMouseEnter}
-            onMouseLeave={handleMouseLeave}
-          >
-            Contact
-          </a>
-        </nav>
-      </header>
+      <Header />
       <div style={{ height: '15px' }} />
       <h1
         style={{
