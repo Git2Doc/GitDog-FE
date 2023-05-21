@@ -28,6 +28,7 @@ function About() {
         <br />
       </p>
       <div style={{ marginTop: '40px' }}>
+        {/* 데모 비디오 삽입 */}
         <video
           controls
           style={{ width: '80%', borderRadius: '10px' }}
