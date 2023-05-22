@@ -7,6 +7,7 @@ function Main() {
   const [repoUrl, setRepoUrl] = useState('');
   const [isHovering, setIsHovering] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
+  const [loadingText, setLoadingText] = useState(''); // Add this line
   const navigate = useNavigate();
 
   const handleMouseEnter = () => {
@@ -21,6 +22,7 @@ function Main() {
 
   const handleSearch = async () => {
     setIsLoading(true);
+    setLoadingText('Creating Repository ...'); // Update loading text
     try {
       let response = await fetch('http://13.124.113.68/repository', {
         method: 'POST',
@@ -35,6 +37,7 @@ function Main() {
         throw new Error('Network response was not ok');
       }
 
+      setLoadingText('Indexing...'); // Update loading text again for the second API call
       const jsonResponse = await response.json();
       const repositoryId = jsonResponse.data.id;
       console.log(repositoryId);
@@ -86,8 +89,7 @@ function Main() {
       }}
     >
       <Header />
-      {isLoading && <Loading />}{' '}
-      {/* Display the Loading component when isLoading is true */}
+      {isLoading && <Loading text={loadingText} />}{' '}
       <div style={{ height: '15px' }} />
       <h1
         style={{

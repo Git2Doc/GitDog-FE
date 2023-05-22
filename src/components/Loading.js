@@ -1,6 +1,7 @@
 import React from 'react';
 
-const Loading = () => {
+// eslint-disable-next-line react/prop-types
+const Loading = ({ text }) => {
   return (
     <div
       style={{
@@ -30,7 +31,7 @@ const Loading = () => {
             marginBottom: '10px',
           }}
         >
-          Loading...
+          {text}
         </div>
         <div
           style={{
