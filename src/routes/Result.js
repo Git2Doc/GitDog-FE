@@ -1,95 +1,55 @@
 import React, { useState } from 'react';
 import logo from '../asset/img/gitdog.png';
 import { useNavigate, useLocation } from 'react-router-dom';
-import { v4 as uuidv4 } from 'uuid';
 import Message from '../components/Message';
-// eslint-disable-next-line react/prop-types
-// eslint-disable-next-line react/prop-types
-
+import RecommendDialog from '../components/RecommendDialog';
+import { RiQuestionnaireFill } from 'react-icons/ri';
+import { prepareMessage, sendMessage } from '../components/MessageHandler';
 function Result() {
   const navigate = useNavigate();
   const location = useLocation();
 
   const { repositoryName, repositoryId } = location.state;
 
-  // Modify the initial message with repositoryName
-  const [messages, setMessages] = useState([
+  const initialMessages = [
     {
       isUser: false,
       text: `안녕하세요! ${repositoryName}에 대해서 질문을 던져보세요!`,
     },
-  ]);
+  ];
 
+  const recommendQuestions = [
+    '이 레포지토리의 목적을 알려줘',
+    '이 레포지토리의 주 사용 언어를 알려줘',
+  ];
+
+  const [messages, setMessages] = useState(initialMessages);
   const [message, setMessage] = useState('');
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = (e) => {
     e.preventDefault();
-    if (message.trim() === '') {
-      return; // Skip empty messages
-    }
 
-    const newMessageId = uuidv4(); // generate a unique ID for the new message
-
-    const newMessage = { id: newMessageId, isUser: true, text: message };
-    setMessages((prevMessages) => [...prevMessages, newMessage]);
-
-    // Add a loading message
-    const loadingMessageId = uuidv4(); // generate a unique ID for the loading message
-    const loadingMessage = {
-      id: loadingMessageId,
-      isUser: false,
-      text: '대답 생성 중...',
-    };
-    setMessages((prevMessages) => [...prevMessages, loadingMessage]);
-
+    const loadingMessageId = prepareMessage(message, messages, setMessages);
+    sendMessage(message, loadingMessageId, repositoryId, messages, setMessages);
     setMessage('');
+  };
 
-    // POST request to the chat API
-    try {
-      let response = await fetch(
-        `http://13.124.113.68/repository/${repositoryId}/chat`,
-        {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify({
-            chat: message,
-          }),
-        },
-      );
-
-      if (!response.ok) {
-        throw new Error('Network response was not ok');
-      }
-
-      const jsonResponse = await response.json();
-
-      // Simulate system response with API response
-      const systemResponse = {
-        id: loadingMessageId, // use the same ID to replace the loading message
-        isUser: false,
-        text: jsonResponse.data.answer,
-      };
-
-      // Replace the loading message with the actual response
-      setMessages((prevMessages) =>
-        prevMessages.map((message) =>
-          message.id === loadingMessageId ? systemResponse : message,
-        ),
-      );
-    } catch (error) {
-      console.error(
-        'There has been a problem with your fetch operation:',
-        error,
-      );
-    }
+  const handleRecommendQuestionClick = (question) => {
+    const loadingMessageId = prepareMessage(question, messages, setMessages);
+    sendMessage(
+      question,
+      loadingMessageId,
+      repositoryId,
+      messages,
+      setMessages,
+    );
+    setMessage('');
   };
 
   return (
     <div
       style={{
-        background: 'linear-gradient(to bottom, #2c3e50, #000000)',
+        background: '#000000',
         height: '100vh',
         padding: '80px 20px',
         boxSizing: 'border-box',
@@ -123,7 +83,6 @@ function Result() {
             alt="Logo"
             style={{ marginRight: '20px' }}
           />
-          <h2 style={{ color: '#fff', margin: 0 }}>GitDog</h2>
         </div>
         <nav
           style={{
@@ -151,12 +110,40 @@ function Result() {
           </a>
         </nav>
       </header>
-      <div style={{ height: '100%', overflowY: 'scroll' }}>
+      <div style={{ height: '95%', overflowY: 'scroll' }}>
         {messages.map((m, i) => (
           <Message key={i} isUser={m.isUser} text={m.text} />
         ))}
+        {messages.length === 1 && (
+          <div
+            style={{
+              display: 'flex',
+              paddingLeft: '40px',
+              marginTop: '15px',
+              alignItems: 'center',
+            }}
+          >
+            <RiQuestionnaireFill
+              style={{
+                color: '#fff',
+                marginRight: '10px',
+                fontSize: '1.5rem',
+              }}
+            />
+            {recommendQuestions.map((question, i) => (
+              <RecommendDialog
+                key={i}
+                text={question}
+                onClick={handleRecommendQuestionClick} // Pass the function here
+              />
+            ))}
+          </div>
+        )}
       </div>
-      <form onSubmit={handleSubmit} style={{ marginTop: '20px' }}>
+      <form
+        onSubmit={(e) => handleSubmit(message, e)}
+        style={{ marginTop: '20px' }}
+      >
         <div style={{ display: 'flex' }}>
           <input
             type="text"
@@ -164,19 +151,19 @@ function Result() {
             onChange={(e) => setMessage(e.target.value)}
             style={{
               flex: 1,
-              padding: '10px',
-              borderRadius: '5px',
-              fontSize: '1.2rem',
+              padding: '15px',
+              borderRadius: '15px',
+              fontSize: '1rem',
               marginRight: '10px',
             }}
-            placeholder="Ask something..."
+            placeholder=" 질문을 입력하세요"
           />
           <button
             type="submit"
             style={{
               backgroundColor: '#fff',
               color: '#000',
-              padding: '10px',
+              padding: '15px',
               borderRadius: '5px',
               fontSize: '1.3rem',
               border: '2px solid #fff',

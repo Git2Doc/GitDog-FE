@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import logo from '../asset/img/gitdog.png';
+import logo from '../asset/img/gitdog_logo.png';
 
 // eslint-disable-next-line react/prop-types
 const Message = ({ isUser, text = '', typingSpeed = 50 }) => {
@@ -29,7 +29,7 @@ const Message = ({ isUser, text = '', typingSpeed = 50 }) => {
       style={{
         display: 'flex',
         justifyContent: isUser ? 'flex-end' : 'flex-start',
-        margin: '10px',
+        marginTop: '20px',
       }}
     >
       {isUser ? (
@@ -42,32 +42,37 @@ const Message = ({ isUser, text = '', typingSpeed = 50 }) => {
             display: 'flex',
             justifyContent: 'center',
             alignItems: 'center',
-            width: '30px',
-            height: '30px',
+            width: '50px',
+            height: '50px',
             marginRight: '10px',
           }}
         >
-          U
+          User
         </div>
       ) : (
         <img
           src={logo}
-          width="30"
-          height="30"
+          width="60"
+          height="45"
           alt="Logo"
-          style={{ marginRight: '10px' }}
+          style={{ marginRight: '10px', marginTop: '10px' }}
         />
       )}
       <div
         style={{
-          backgroundColor: isUser ? '#eeeeee' : '#ddd',
-          padding: '10px',
-          borderRadius: '5px',
-          maxWidth: '70%',
+          backgroundColor: isUser ? '#131314' : '#222327',
+          paddingTop: '15px',
+          paddingBottom: '15px',
+          paddingRight: '20px',
+          paddingLeft: '20px',
+          borderRadius: '20px',
+          maxWidth: '60%',
           wordWrap: 'break-word',
         }}
       >
-        <p>{displayedText}</p>
+        <div>
+          <p style={{ color: '#fff' }}>{displayedText}</p>
+        </div>
       </div>
     </div>
   );
