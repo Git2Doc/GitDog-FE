@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import logo from '../asset/img/gitdog_logo.png';
+import MarkdownRenderer from './MarkdownRenderer';
 
 // eslint-disable-next-line react/prop-types
-const Message = ({ isUser, text = '', typingSpeed = 50 }) => {
+const Message = ({ isUser, text = '', typingSpeed = 30 }) => {
   const [displayedText, setDisplayedText] = useState('');
 
   useEffect(() => {
@@ -71,7 +72,7 @@ const Message = ({ isUser, text = '', typingSpeed = 50 }) => {
         }}
       >
         <div>
-          <p style={{ color: '#fff' }}>{displayedText}</p>
+          <MarkdownRenderer content={displayedText} />
         </div>
       </div>
     </div>

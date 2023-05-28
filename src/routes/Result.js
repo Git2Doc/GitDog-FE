@@ -26,7 +26,7 @@ function Result() {
   const [messages, setMessages] = useState(initialMessages);
   const [message, setMessage] = useState('');
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
     const loadingMessageId = prepareMessage(message, messages, setMessages);
@@ -140,10 +140,7 @@ function Result() {
           </div>
         )}
       </div>
-      <form
-        onSubmit={(e) => handleSubmit(message, e)}
-        style={{ marginTop: '20px' }}
-      >
+      <form onSubmit={handleSubmit} style={{ marginTop: '20px' }}>
         <div style={{ display: 'flex' }}>
           <input
             type="text"
