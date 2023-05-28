@@ -1,74 +1,57 @@
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
 import Header from '../components/Header';
 import Loading from '../components/Loading';
+import { Slider } from '../components/Slider';
 
 function Main() {
   const [repoUrl, setRepoUrl] = useState('');
   const [isHovering, setIsHovering] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
-  const [loadingText, setLoadingText] = useState(''); // Add this line
-  const navigate = useNavigate();
+  const [loadingText, setLoadingText] = useState('');
+  const [ids, setIds] = useState([]); // ID 배열 상태 추가
+  const [urls, setUrls] = useState([]); // URL 배열 상태 추가
 
   const handleMouseEnter = () => {
     setIsHovering(true);
+    console.log('Mouse entered the button');
   };
 
   const handleMouseLeave = () => {
     setIsHovering(false);
+    console.log('Mouse left the button');
   };
-
-  const getRepoName = (url) => url.split('/').pop().replace('.git', '');
 
   const handleSearch = async () => {
     setIsLoading(true);
-    setLoadingText('Creating Repository ...'); // Update loading text
+    setLoadingText('Fetching Repositories...');
+
     try {
-      let response = await fetch('http://13.124.113.68/repository', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          url: repoUrl,
-        }),
-      });
+      const response = await fetch('https://api.gitdog.site/repository/list');
       if (!response.ok) {
         throw new Error('Network response was not ok');
       }
+      const data = await response.json();
 
-      setLoadingText('Indexing...'); // Update loading text again for the second API call
-      const jsonResponse = await response.json();
-      const repositoryId = jsonResponse.data.id;
-      console.log(repositoryId);
-      response = await fetch(
-        `http://13.124.113.68/repository/${repositoryId}`,
-        {
-          method: 'POST',
-          headers: {
-            Accept: 'application/json',
-          },
-        },
-      );
-
-      if (!response.ok) {
-        throw new Error('Network response was not ok');
+      if (
+        data.data &&
+        data.data.repositories &&
+        Array.isArray(data.data.repositories)
+      ) {
+        const repositories = data.data.repositories;
+        const ids = repositories.map((repo) => repo.id);
+        const urls = repositories.map((repo) => repo.url);
+        setIds(ids); // ID 배열 상태 업데이트
+        setUrls(urls); // URL 배열 상태 업데이트
+        console.log('IDs:', ids);
+        console.log('URLs:', urls);
+      } else {
+        console.log('No repositories found');
       }
 
       setIsLoading(false);
-
-      navigate('/result', {
-        state: {
-          repositoryId,
-          repositoryName: getRepoName(repoUrl),
-        },
-      });
     } catch (error) {
       setIsLoading(false);
-      console.error(
-        'There has been a problem with your fetch operation:',
-        error,
-      );
+      console.error('Error fetching repositories:', error);
     }
   };
 
@@ -85,11 +68,11 @@ function Main() {
         justifyContent: 'center',
         alignItems: 'center',
         flexDirection: 'column',
-        position: 'relative', // Add relative positioning
+        position: 'relative',
       }}
     >
       <Header />
-      {isLoading && <Loading text={loadingText} />}{' '}
+      {isLoading && <Loading text={loadingText} />}
       <div style={{ height: '15px' }} />
       <h1
         style={{
@@ -97,16 +80,29 @@ function Main() {
           fontWeight: 'bold',
           color: '#fff',
           textShadow: '2px 2px #333',
+          position: 'relative',
+          top: '-40px',
         }}
       >
         GitDog .
       </h1>
       <div
         style={{
+          width: '950px',
+          position: 'relative',
+          top: '30px',
+        }}
+      >
+        <Slider ids={ids} urls={urls} />{' '}
+        {/* ID 배열과 URL 배열을 Slider 컴포넌트에 전달 */}
+      </div>
+      <div
+        style={{
           width: '70%',
           display: 'flex',
           justifyContent: 'center',
           position: 'relative',
+          top: '100px',
         }}
       >
         <input
