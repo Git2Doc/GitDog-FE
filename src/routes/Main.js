@@ -24,7 +24,7 @@ function Main() {
     setIsLoading(true);
     setLoadingText('Creating Repository ...'); // Update loading text
     try {
-      let response = await fetch('http://13.124.113.68/repository', {
+      let response = await fetch('https://api.gitdog.site/repository', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -42,7 +42,7 @@ function Main() {
       const repositoryId = jsonResponse.data.id;
       console.log(repositoryId);
       response = await fetch(
-        `http://13.124.113.68/repository/${repositoryId}`,
+        `https://api.gitdog.site/repository/${repositoryId}`,
         {
           method: 'POST',
           headers: {
