@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Header from '../components/Header';
 import Loading from '../components/Loading';
 import { Slider } from '../components/Slider';
@@ -21,7 +21,7 @@ function Main() {
     console.log('Mouse left the button');
   };
 
-  const handleSearch = async () => {
+  const fetchData = async () => {
     setIsLoading(true);
     setLoadingText('Fetching Repositories...');
 
@@ -54,6 +54,10 @@ function Main() {
       console.error('Error fetching repositories:', error);
     }
   };
+
+  useEffect(() => {
+    fetchData();
+  }, []); // 컴포넌트가 마운트될 때 한 번만 데이터를 가져옴
 
   const handleInputChange = (event) => {
     setRepoUrl(event.target.value);
@@ -102,7 +106,7 @@ function Main() {
           display: 'flex',
           justifyContent: 'center',
           position: 'relative',
-          top: '100px',
+          top: '-17px',
         }}
       >
         <input
@@ -129,7 +133,6 @@ function Main() {
           }}
           onMouseEnter={handleMouseEnter}
           onMouseLeave={handleMouseLeave}
-          onClick={handleSearch}
         >
           Search
         </button>

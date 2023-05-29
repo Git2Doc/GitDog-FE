@@ -3,6 +3,7 @@ import { Swiper, SwiperSlide } from 'swiper/react';
 import { Pagination, Navigation } from 'swiper';
 import { useNavigate } from 'react-router-dom';
 import PropTypes from 'prop-types';
+import { useEffect } from 'react';
 
 import 'swiper/css';
 import 'swiper/css/pagination';
@@ -10,8 +11,15 @@ import 'swiper/css/navigation';
 
 export const Slider = ({ ids, urls }) => {
   const [slideStyle] = useState({
-    height: '300px',
+    height: '320px',
   });
+
+  useEffect(() => {
+    const swiperThemeColor = document.querySelector('.swiper-theme-color');
+    if (swiperThemeColor) {
+      swiperThemeColor.style.backgroundColor = 'red'; // 원하는 색상으로 변경합니다.
+    }
+  }, []);
 
   const IDs = [];
   const URLs = [];
@@ -28,30 +36,27 @@ export const Slider = ({ ids, urls }) => {
   };
 
   const [hoveredIndex, setHoveredIndex] = useState(null);
-
   const handleMouseEnter = (index) => {
     setHoveredIndex(index);
   };
-
   const handleMouseLeave = () => {
     setHoveredIndex(null);
   };
 
   const buttonStyle = {
-    width: '250px',
+    width: '270px',
     height: '250px',
     fontSize: '16px',
-    borderRadius: '23px',
+    border: '1px solid #f7f7f2',
+    borderRadius: '20px',
     marginTop: '20px',
-    marginLeft: '36px',
-    background: 'rgba(128, 128, 128, 0)',
+
+    background: 'transparent',
     paddingBottom: '250px',
     paddingRight: '150px',
     fontWeight: 'bold',
-    color: (index) => (hoveredIndex === index ? '#EBE38C' : '#C1BFAE'),
+    color: (index) => (hoveredIndex === index ? '#f7f7f2' : '#ebe8d5'),
     transform: (index) => (hoveredIndex === index ? 'scale(1.1)' : 'scale(1)'),
-    border: (index) =>
-      hoveredIndex === index ? '2px solid #EBE38C' : '2px solid #C1BFAE',
   };
 
   const textContainerStyle = {
@@ -62,7 +67,6 @@ export const Slider = ({ ids, urls }) => {
     wordWrap: 'break-word',
   };
 
-  // ids와 urls를 기반으로 IDs와 URLs 배열에 정보를 할당
   ids.forEach((id, index) => {
     IDs[index] = id;
     URLs[index] = urls[index];
@@ -71,7 +75,7 @@ export const Slider = ({ ids, urls }) => {
   return (
     <Swiper
       modules={[Pagination, Navigation]}
-      spaceBetween={20}
+      spaceBetween={5}
       slidesPerView={3}
       navigation
       pagination={{ clickable: true }}
