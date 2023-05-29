@@ -59,7 +59,7 @@ const Message = ({ isUser, text = '', typingSpeed = 30 }) => {
           style={{
             marginRight: '10px',
             marginTop: '10px',
-            borderRadius: '10px',
+            borderRadius: '5px',
           }}
         />
       )}
