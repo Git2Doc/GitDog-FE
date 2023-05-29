@@ -6,6 +6,11 @@ import { atomDark } from 'react-syntax-highlighter/dist/esm/styles/prism';
 import remarkGfm from 'remark-gfm';
 
 const components = {
+  li: ({ children, ...props }) => (
+    <li {...props} style={{ color: '#fff', marginLeft: '20px' }}>
+      {children}
+    </li>
+  ),
   code({ inline, className, children, ...props }) {
     const match = /language-(\w+)/.exec(className || '');
     return !inline && match ? (

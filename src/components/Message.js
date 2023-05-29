@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import logo from '../asset/img/gitdog_logo.png';
+import logo from '../asset/img/gitdog.png';
 import MarkdownRenderer from './MarkdownRenderer';
 
 // eslint-disable-next-line react/prop-types
@@ -54,14 +54,18 @@ const Message = ({ isUser, text = '', typingSpeed = 30 }) => {
         <img
           src={logo}
           width="60"
-          height="45"
+          height="60"
           alt="Logo"
-          style={{ marginRight: '10px', marginTop: '10px' }}
+          style={{
+            marginRight: '10px',
+            marginTop: '10px',
+            borderRadius: '10px',
+          }}
         />
       )}
       <div
         style={{
-          backgroundColor: isUser ? '#131314' : '#222327',
+          backgroundColor: isUser ? '#131314' : '#131314',
           paddingTop: '15px',
           paddingBottom: '15px',
           paddingRight: '20px',

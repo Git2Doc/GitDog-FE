@@ -49,7 +49,7 @@ function Result() {
   return (
     <div
       style={{
-        background: '#000000',
+        background: '#222327',
         height: '100vh',
         padding: '80px 20px',
         boxSizing: 'border-box',
