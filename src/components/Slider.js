@@ -60,11 +60,12 @@ export const Slider = ({ ids, urls }) => {
   };
 
   const textContainerStyle = {
-    width: '150px',
+    width: '210px',
     marginTop: '40px',
-    marginLeft: '30px',
-    position: 'relative',
+    marginLeft: '20px',
+    position: 'absolute',
     wordWrap: 'break-word',
+    textAlign: 'left',
   };
 
   ids.forEach((id, index) => {
