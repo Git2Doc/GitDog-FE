@@ -67,7 +67,7 @@ function Footer() {
             }}
           >
             <a
-              href="https://github.com/Git2Doc"
+              href="https://github.com/Git2Doc/GitDog-FE"
               target="_blank"
               rel="noopener noreferrer"
               style={{
