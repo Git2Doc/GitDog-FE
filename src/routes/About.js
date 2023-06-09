@@ -1,5 +1,6 @@
 import React from 'react';
 import Header from '../components/Header';
+import YouTube from 'react-youtube';
 
 function About() {
   return (
@@ -28,14 +29,22 @@ function About() {
         <br />
       </p>
       <div style={{ marginTop: '40px' }}>
-        {/* 데모 비디오 삽입 */}
-        <video
-          controls
-          style={{ width: '80%', borderRadius: '10px' }}
-          src="https://path-to-your-video.com/video.mp4"
-        >
-          Your browser does not support the video tag.
-        </video>
+        <YouTube
+          videoId="4Aa0LZZ5kwY"
+          opts={{
+            width: '700',
+            height: '400',
+            playerVars: {
+              autoplay: 1,
+              rel: 0,
+              modestbranding: 1,
+            },
+          }}
+          //이벤트 리스너
+          onEnd={(e) => {
+            e.target.stopVideo(0);
+          }}
+        />
       </div>
     </div>
   );
