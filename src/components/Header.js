@@ -63,9 +63,6 @@ function Header() {
         <NavLink to="/about" style={linkStyle} activeStyle={activeStyle}>
           About
         </NavLink>
-        <NavLink to="/contact" style={linkStyle} activeStyle={activeStyle}>
-          Contact
-        </NavLink>
       </nav>
     </header>
   );

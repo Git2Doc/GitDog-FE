@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Header from '../components/Header';
 import Loading from '../components/Loading';
+import Footer from '../components/Footer';
 
 function Main() {
   const [repoUrl, setRepoUrl] = useState('');
@@ -79,65 +80,79 @@ function Main() {
   return (
     <div
       style={{
-        background: 'linear-gradient(to bottom, #2c3e50, #000000)',
-        height: '100vh',
         display: 'flex',
-        justifyContent: 'center',
-        alignItems: 'center',
         flexDirection: 'column',
-        position: 'relative', // Add relative positioning
+        minHeight: '100vh',
+        width: '100%',
+        backgroundColor: 'black',
+        color: 'white',
+        zIndex: '-1',
+        overflowX: 'hidden',
       }}
     >
-      <Header />
-      {isLoading && <Loading text={loadingText} />}{' '}
-      <div style={{ height: '15px' }} />
-      <h1
-        style={{
-          fontSize: '4.5rem',
-          fontWeight: 'bold',
-          color: '#fff',
-          textShadow: '2px 2px #333',
-        }}
-      >
-        GitDog .
-      </h1>
       <div
         style={{
-          width: '70%',
+          background: 'linear-gradient(to bottom, #2c3e50, #000000)',
+          height: '100vh',
           display: 'flex',
           justifyContent: 'center',
-          position: 'relative',
+          alignItems: 'center',
+          flexDirection: 'column',
+          position: 'relative', // Add relative positioning
         }}
       >
-        <input
-          type="text"
+        <Header />
+        {isLoading && <Loading text={loadingText} />}{' '}
+        <div style={{ height: '15px' }} />
+        <h1
           style={{
-            padding: '10px',
-            borderRadius: '5px',
-            fontSize: '1.2rem',
-            width: '60%',
-            marginRight: '10px',
+            fontSize: '4.5rem',
+            fontWeight: 'bold',
+            color: '#fff',
+            textShadow: '2px 2px #333',
           }}
-          placeholder="ex) https://github.com/repo1"
-          value={repoUrl}
-          onChange={handleInputChange}
-        />
-        <button
-          style={{
-            backgroundColor: isHovering ? '#fff' : 'transparent',
-            color: isHovering ? '#000' : '#fff',
-            padding: '10px',
-            borderRadius: '5px',
-            fontSize: '1.3rem',
-            border: '2px solid #fff',
-          }}
-          onMouseEnter={handleMouseEnter}
-          onMouseLeave={handleMouseLeave}
-          onClick={handleSearch}
         >
-          Search
-        </button>
+          GitDog .
+        </h1>
+        <div
+          style={{
+            width: '70%',
+            display: 'flex',
+            justifyContent: 'center',
+            position: 'relative',
+          }}
+        >
+          <input
+            type="text"
+            style={{
+              padding: '10px',
+              borderRadius: '5px',
+              fontSize: '1.2rem',
+              width: '60%',
+              marginRight: '10px',
+            }}
+            placeholder="ex) https://github.com/repo1"
+            value={repoUrl}
+            onChange={handleInputChange}
+          />
+          <button
+            style={{
+              backgroundColor: isHovering ? '#fff' : 'transparent',
+              color: isHovering ? '#000' : '#fff',
+              padding: '10px',
+              borderRadius: '5px',
+              fontSize: '1.3rem',
+              border: '2px solid #fff',
+            }}
+            onMouseEnter={handleMouseEnter}
+            onMouseLeave={handleMouseLeave}
+            onClick={handleSearch}
+          >
+            Search
+          </button>
+        </div>
       </div>
+      <Footer />
     </div>
   );
 }
